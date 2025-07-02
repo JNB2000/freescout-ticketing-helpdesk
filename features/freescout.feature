@@ -1,6 +1,6 @@
 Feature: Freescout Ticketing Platform
 
-  # Positive Path
+  ### Positive Path ###
   Scenario: Create a new bug ticket as a user in the platform
     Given the user is logged in to FreeScout
     And the user is in the "Bugs" mailbox
@@ -104,7 +104,7 @@ Feature: Freescout Ticketing Platform
     When the user looks at tickets
     Then display the time in the selected format
 
-  # Negative Path
+  ### Negative Path ###
   Scenario: Attempt to send a ticket without a customer email
     Given the user is on the "New Conversation" page
     When the user leaves the email field blank
