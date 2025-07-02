@@ -70,11 +70,11 @@ Feature: Freescout Ticketing Platform
 
   '
   Scenario: Recover access using the "Forgot Your Password?" feature
-    Given the user has an active FreeScout account
+    Given the user has an active freescout account
     And the user is on the login page
     When the user clicks the "Forgot Your Password?" link
     Then the user is redirected to the "Reset Password" page
-  '
+  
 
     When the user enters their valid email address
     And clicks the "Send Password Reset Link" button
@@ -83,6 +83,26 @@ Feature: Freescout Ticketing Platform
     When the user follows the link in the email
     And sets a new valid password
     Then the user can log in to FreeScout using the new password
+  '
+
+  Scenario: User email needs updating
+    Given a users first or last name has changed
+    When an admin user changes the email in the profile page for that user
+    Then the user can still access freescout
+
+  Scenario: User uploads a profile picture
+    Given the user is on the profile picture upload page
+    When the user uploads a photo for their profile picture
+    Then the image is accepted without sizing issues
+    And the uploaded image is displayed clearly without cropping problems
+    When the user views their profile picture in the system
+    Then the image is clear and properly cropped
+    And other users can see the updated profile picture throughout the system
+
+  Scenario: Changing the time format
+    Given a user updates their time format preference
+    When the user looks at tickets
+    Then display the time in the selected format
 
   # Negative Path
   Scenario: Attempt to send a ticket without a customer email
@@ -106,3 +126,9 @@ Feature: Freescout Ticketing Platform
     Given a user tries to reset an account password which is not setup as a user
     When the user clickc "Send Password Reset Link"
     Then an error appears "We can't find a user with that e-mail address."
+
+  Scenario: Attempt to access the Roxhill dashboard as a deleted user
+    Given a user once had access to the Roxhill dashboard
+    And has since had their account deleted
+    Then the user cannot access the Roxhill dashboard when logging into freescout
+
