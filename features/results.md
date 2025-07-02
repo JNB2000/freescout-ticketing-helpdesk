@@ -1,6 +1,6 @@
 # Test Results - Freescout Ticketing Platform
 
-| Scenario                                                 | Date       | Result | Comments                 |
+| Scenario                                                 | Date       | Result  | Comments                 |
 |                                                          |            |        |                          |
 | Create a new bug ticket as a user in the platform        | 02-07-2025 |        |                          |
 | Create a new feature ticket as a user in the platform    | 02-07-2025 |        |                          |
