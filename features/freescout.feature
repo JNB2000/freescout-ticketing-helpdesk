@@ -63,13 +63,33 @@ Feature: Freescout Ticketing Platform
     When the user toggles dark mode off
     Then dark mode is deactivated and light mode is restored
 
+  Scenario: Mention a team member on a ticket
+    Given the user has a ticket open
+    When the user "@s" a team member in the ticket
+    Then the team member is notified and alerted in the freescout alert system
+
+  '
+  Scenario: Recover access using the "Forgot Your Password?" feature
+    Given the user has an active FreeScout account
+    And the user is on the login page
+    When the user clicks the "Forgot Your Password?" link
+    Then the user is redirected to the "Reset Password" page
+  '
+
+    When the user enters their valid email address
+    And clicks the "Send Password Reset Link" button
+    Then a "Reset Password" email is sent to the user's inbox
+
+    When the user follows the link in the email
+    And sets a new valid password
+    Then the user can log in to FreeScout using the new password
 
   # Negative Path
   Scenario: Attempt to send a ticket without a customer email
     Given the user is on the "New Conversation" page
     When the user leaves the email field blank
     And clicks the "Send" button
-    Then an error message is shown stating "Customer email is required"?
+    Then an error message is shown stating "This value is required"
 
   Scenario: Attempt to reply to a closed ticket
     Given a ticket is marked as "Closed"
@@ -79,5 +99,10 @@ Feature: Freescout Ticketing Platform
 
   Scenario: File attachment exceeds size limit
     Given a ticket is being composed
-    When the user attaches a file larger than 10MB
+    When the user attaches a file larger than the system limit
     Then an error is shown indicating the file is too large
+
+  Scenario: Attempt to reset account password with incorrect email
+    Given a user tries to reset an account password which is not setup as a user
+    When the user clickc "Send Password Reset Link"
+    Then an error appears "We can't find a user with that e-mail address."
